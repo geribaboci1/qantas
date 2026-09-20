@@ -1,0 +1,3743 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Seventeen Hours South — A Single-Journey Campaign Proposal for Qantas</title>
+    <meta
+      name="description"
+      content="A single-journey campaign proposal by @legefilms. Dallas/Fort Worth to Sydney on the Airbus A380 — one hero Reel and three ambient Reels built around the longest leg in the network."
+    />
+
+    <!-- Paint the cream ground immediately, and opt out of any forced dark
+         mode: this deck is a light document on purpose. -->
+    <meta name="theme-color" content="#F7F3EC" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- This proposal stays out of search results. Delete to make it public. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+
+    <!-- Link preview (iMessage / Slack / email).
+         og:image should be made ABSOLUTE once a domain is attached — most
+         scrapers will not resolve a relative path. See README. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Seventeen Hours South" />
+    <meta
+      property="og:description"
+      content="A single-journey campaign proposal by @legefilms — DFW to Sydney on the A380."
+    />
+    <meta property="og:image" content="./assets/destination-syd.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Seventeen Hours South" />
+    <meta
+      name="twitter:description"
+      content="A single-journey campaign proposal by @legefilms — DFW to Sydney on the A380."
+    />
+    <meta name="twitter:image" content="./assets/destination-syd.jpg" />
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F7F3EC'/%3E%3Cpath d='M16 5 L19 17 L28 20 L19 21 L16 27 L13 21 L4 20 L13 17 Z' fill='%23E40000'/%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Work+Sans:ital,wght@0,300..600;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ====================================================================
+         SEVENTEEN HOURS SOUTH — @legefilms × Qantas
+
+         Structure inherited from "Beyond The Horizon" (the United deck):
+         same Space Grotesk / JetBrains Mono pairing, same card system, same
+         mono technical readouts, same scroll reveals, same equirectangular
+         route map. The ground is inverted — cream paper and Qantas red
+         instead of charcoal and electric blue.
+
+         PALETTE IN ONE PLACE: every colour below comes from :root.
+         For a pure-white deck instead of cream, set --paper to #FFFFFF and
+         --paper-band to #F5F5F5. Nothing else needs touching.
+         ================================================================= */
+
+      :root {
+        /* GROUND */
+        --paper: #f7f3ec; /* page */
+        --paper-band: #f0eade; /* alternating section band */
+        --surface: #ffffff; /* cards */
+        --land: #e7dfd1; /* map landmass */
+
+        /* INK */
+        --heading: #17130f;
+        --body: #3b352d;
+        /* Deep enough to clear 4.5:1 on the cream ground as well as on white
+           — the mono labels are small, so hierarchy comes from size and
+           letter-spacing rather than from fading the colour out. */
+        --muted: #6d6458; /* mono labels, captions, secondary copy */
+
+        /* RULES */
+        --line: rgba(23, 19, 15, 0.13);
+        --line-soft: rgba(23, 19, 15, 0.07);
+
+        /* CLIENT ACCENT — Qantas red.
+           --brand    : fills, rules, markers, display numerals
+           --brand-dp : deepened for small text, which needs 4.5:1 on cream */
+        --brand: #e40000;
+        --brand-dp: #be0000;
+        --brand-rgb: 228, 0, 0;
+
+        --shadow-sm: 0 1px 2px rgba(23, 19, 15, 0.04),
+          0 14px 34px -22px rgba(23, 19, 15, 0.28);
+        --shadow-lg: 0 1px 2px rgba(23, 19, 15, 0.04),
+          0 40px 80px -48px rgba(23, 19, 15, 0.4);
+
+        /* TYPE — an editorial pairing, deliberately not a technical one.
+           Fraunces is a warm high-contrast serif with an optical-size axis;
+           Work Sans carries the body and the small labels. There is no
+           monospace anywhere: the old deck set every label in JetBrains Mono,
+           which is what made the page read like an instrument panel.
+           To go more classical, swap Fraunces for "Playfair Display". */
+        --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype",
+          Georgia, "Times New Roman", serif;
+        --font-sans: "Work Sans", ui-sans-serif, system-ui, -apple-system,
+          "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        --maxw: 1180px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--paper);
+        color-scheme: light;
+        /* Belt-and-braces: nothing may bleed the page sideways on a phone.
+           The real fixes are the min-width:0 grid guard and the clamped
+           background washes below — this only catches anything new. */
+        overflow-x: hidden;
+      }
+
+      /* Grid items default to min-width:auto, so a wide child (the 620px map
+         floor, a long unbroken string) stretches the whole column past the
+         viewport instead of scrolling inside its own box. */
+      .map-grid > *,
+      .invest > *,
+      .creator-grid > *,
+      .work-grid > *,
+      .deliv-grid > *,
+      .acts > *,
+      .why-list > *,
+      .rail > *,
+      .metrics > * {
+        min-width: 0;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--body);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        overflow-x: hidden;
+      }
+
+      ::selection {
+        background: rgba(var(--brand-rgb), 0.18);
+        color: var(--heading);
+      }
+
+      .mono {
+        font-family: var(--font-sans);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      img,
+      video {
+        display: block;
+        max-width: 100%;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--brand);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      /* Scrollbars */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--paper);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(23, 19, 15, 0.2);
+        border: 3px solid var(--paper);
+        border-radius: 999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(var(--brand-rgb), 0.55);
+      }
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(23, 19, 15, 0.22) var(--paper);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* PRIMITIVES                                                        */
+      /* ---------------------------------------------------------------- */
+
+      .section {
+        position: relative;
+        width: 100%;
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 88px 24px;
+      }
+      @media (min-width: 768px) {
+        .section {
+          padding: 116px 40px;
+        }
+      }
+
+      .band {
+        position: relative;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: var(--paper-band);
+        overflow: hidden;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .eyebrow i {
+        display: block;
+        height: 1px;
+        width: 32px;
+        background: var(--brand);
+      }
+      .eyebrow span {
+        font-family: var(--font-sans);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--brand-dp);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-optical-sizing: auto;
+        margin: 0;
+        color: var(--heading);
+      }
+
+      .h2 {
+        margin-top: 24px;
+        max-width: 780px;
+        font-size: clamp(2.05rem, 5.2vw, 3.5rem);
+        font-weight: 400;
+        line-height: 1.12;
+        letter-spacing: -0.015em;
+        color: var(--heading);
+      }
+      /* The second clause of each headline is set in italic rather than a
+         paler grey — an editorial emphasis instead of a UI one. */
+      .h2 .dim {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--brand);
+      }
+
+      .lede {
+        margin: 24px 0 0;
+        max-width: 640px;
+        font-size: 15px;
+        line-height: 1.75;
+        color: var(--body);
+      }
+      @media (min-width: 768px) {
+        .lede {
+          font-size: 16px;
+        }
+      }
+
+      .kicker {
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--brand-dp);
+      }
+
+      .meta {
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+      }
+
+      /* Card — the deck's single structural unit */
+      .card {
+        position: relative;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: border-color 0.5s var(--ease), box-shadow 0.5s var(--ease),
+          transform 0.5s var(--ease);
+      }
+      .card.hoverable:hover {
+        border-color: rgba(var(--brand-rgb), 0.35);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .rule {
+        height: 1px;
+        width: 100%;
+        background: var(--line);
+      }
+
+      /* Travelling-light rule — a red mark running along a hairline */
+      .status {
+        position: relative;
+        height: 1px;
+        width: 100%;
+        overflow: hidden;
+        background: var(--line);
+      }
+      .status::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 33%;
+        background: linear-gradient(90deg, transparent, var(--brand), transparent);
+        animation: sweep 3.2s ease-in-out infinite;
+        animation-delay: var(--sd, 0s);
+      }
+      @keyframes sweep {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(300%);
+        }
+      }
+
+      /* Scroll reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+        transition-delay: var(--d, 0s);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Buttons */
+      .btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        padding: 16px 32px;
+        font-family: var(--font-sans);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.11em;
+        transition: all 0.4s var(--ease);
+      }
+      .btn-primary {
+        border: 1px solid var(--brand);
+        background: var(--brand);
+        color: #fff;
+        box-shadow: 0 12px 28px -14px rgba(var(--brand-rgb), 0.75);
+      }
+      .btn-primary:hover {
+        background: var(--brand-dp);
+        border-color: var(--brand-dp);
+        box-shadow: 0 16px 34px -12px rgba(var(--brand-rgb), 0.85);
+      }
+      .btn-primary .shine {
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+        transition: transform 0.7s var(--ease);
+      }
+      .btn-primary:hover .shine {
+        transform: translateX(100%);
+      }
+      .btn-ghost {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--body);
+      }
+      .btn-ghost:hover {
+        border-color: var(--heading);
+        color: var(--heading);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 5px 13px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+      .tag.accent {
+        border-color: rgba(var(--brand-rgb), 0.45);
+        color: var(--brand-dp);
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      /* Media placeholder when a file has not been dropped in yet */
+      .media-wrap {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #efe9de, #f7f3ec 55%, #e9e2d6);
+      }
+      .media-fallback {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        min-height: 180px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 24px;
+        text-align: center;
+      }
+      .media-fallback .glyph {
+        font-size: 18px;
+        color: rgba(var(--brand-rgb), 0.55);
+      }
+      .media-fallback p {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--muted);
+      }
+      .media-fallback p.sub {
+        font-size: 9px;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+
+      /* Reference caption stamped on every non-portfolio image */
+      .refcap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 9px 16px;
+        background: linear-gradient(to top, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0));
+        font-family: var(--font-sans);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.11em;
+        color: var(--muted);
+      }
+
+      /* Anything too wide for a phone scrolls inside itself */
+      .scroll-x {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* CHROME — progress bar + nav                                       */
+      /* ---------------------------------------------------------------- */
+
+      #progress {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 60;
+        height: 2px;
+        width: 100%;
+        transform: scaleX(0);
+        transform-origin: left;
+        background: var(--brand);
+      }
+
+      header.nav {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 50;
+        border-bottom: 1px solid var(--line);
+        background: rgba(247, 243, 236, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      header.nav nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 14px 24px;
+      }
+      @media (min-width: 768px) {
+        header.nav nav {
+          padding: 14px 40px;
+        }
+      }
+      .brandmark {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-display);
+        font-size: 17px;
+        font-weight: 400;
+        letter-spacing: 0;
+        color: var(--heading);
+      }
+      .brandmark .dot {
+        width: 7px;
+        height: 7px;
+        background: var(--brand);
+        transform: rotate(45deg);
+      }
+      .navlinks {
+        display: none;
+        gap: 34px;
+      }
+      @media (min-width: 900px) {
+        .navlinks {
+          display: flex;
+        }
+      }
+      .navlinks button {
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        transition: color 0.3s;
+      }
+      .navlinks button:hover {
+        color: var(--brand-dp);
+      }
+      .nav-cta {
+        border-radius: 999px;
+        border: 1px solid var(--brand);
+        background: var(--brand);
+        padding: 9px 17px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #fff;
+        transition: all 0.3s;
+      }
+      .nav-cta:hover {
+        background: var(--brand-dp);
+        border-color: var(--brand-dp);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* HERO                                                              */
+      /* ---------------------------------------------------------------- */
+
+      .hero {
+        position: relative;
+        display: flex;
+        min-height: 100svh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 120px 0 0;
+      }
+      .hero-field {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .hero-field .blob1 {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        height: min(720px, 120vw);
+        width: min(720px, 120vw);
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        background: radial-gradient(
+          circle,
+          rgba(var(--brand-rgb), 0.1),
+          rgba(var(--brand-rgb), 0) 68%
+        );
+      }
+      .hero-field .blob2 {
+        position: absolute;
+        bottom: -10%;
+        left: 16%;
+        height: min(420px, 80vw);
+        width: min(420px, 80vw);
+        border-radius: 999px;
+        background: radial-gradient(
+          circle,
+          rgba(var(--brand-rgb), 0.06),
+          rgba(var(--brand-rgb), 0) 70%
+        );
+      }
+      /* Fine registration grid — printer's guide, not a HUD */
+      .hero-field .grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.5;
+        background-image: linear-gradient(rgba(23, 19, 15, 0.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(23, 19, 15, 0.045) 1px, transparent 1px);
+        background-size: 72px 72px;
+        -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 68%);
+        mask-image: radial-gradient(ellipse at center, black 10%, transparent 68%);
+      }
+      .hero-field .fade {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 190px;
+        background: linear-gradient(to top, var(--paper), transparent);
+      }
+
+      /* Printer's crop marks — kept, but pulled back to a quiet grey so they
+         frame the page instead of announcing themselves. */
+      .hud-corner {
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        border-color: rgba(23, 19, 15, 0.22);
+        pointer-events: none;
+        opacity: 0;
+        animation: hudin 1.2s var(--ease) 0.9s forwards;
+      }
+      @keyframes hudin {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .hud-tl {
+        left: 24px;
+        top: 96px;
+        border-left: 1px solid;
+        border-top: 1px solid;
+      }
+      .hud-tr {
+        right: 24px;
+        top: 96px;
+        border-right: 1px solid;
+        border-top: 1px solid;
+      }
+      .hud-bl {
+        left: 24px;
+        bottom: 96px;
+        border-left: 1px solid;
+        border-bottom: 1px solid;
+      }
+      .hud-br {
+        right: 24px;
+        bottom: 96px;
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+      }
+      @media (min-width: 768px) {
+        .hud-tl,
+        .hud-bl {
+          left: 40px;
+        }
+        .hud-tr,
+        .hud-br {
+          right: 40px;
+        }
+      }
+
+      .readout {
+        position: absolute;
+        top: 112px;
+        display: none;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        line-height: 1.85;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        pointer-events: none;
+        opacity: 0;
+        animation: fadein 1s ease 1.1s forwards;
+      }
+      @media (min-width: 1024px) {
+        .readout {
+          display: block;
+        }
+      }
+      .readout.left {
+        left: 40px;
+      }
+      .readout.right {
+        right: 40px;
+        text-align: right;
+      }
+      .readout .hl {
+        color: var(--brand-dp);
+      }
+      .readout p {
+        margin: 0;
+      }
+      .readout p.gap {
+        margin-top: 14px;
+      }
+      @keyframes fadein {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        width: 100%;
+        max-width: 1000px;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 24px;
+        text-align: center;
+      }
+
+      .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 40px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 8px 16px;
+        opacity: 0;
+        animation: rise 1s var(--ease) forwards;
+      }
+      .hero-pill .live {
+        height: 6px;
+        width: 6px;
+        border-radius: 999px;
+        background: var(--brand);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .hero-pill span.txt {
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+      }
+
+      h1.hero-title {
+        font-size: clamp(2.9rem, 11.5vw, 7rem);
+        font-weight: 400;
+        line-height: 1.02;
+        /* Serif display wants tight, not tracked-out. The old 0.08em spacing
+           was what made the wordmark read as a readout. */
+        letter-spacing: -0.02em;
+        color: var(--heading);
+        opacity: 0;
+        filter: blur(14px);
+        transform: translateY(30px);
+        animation: blurin 1.4s var(--ease) 0.15s forwards;
+      }
+      h1.hero-title .grad {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--brand);
+      }
+      @keyframes blurin {
+        to {
+          opacity: 1;
+          filter: blur(0);
+          transform: none;
+        }
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .hero-rule {
+        margin-top: 40px;
+        width: 100%;
+        max-width: 420px;
+        opacity: 0;
+        animation: fadein 1.2s var(--ease) 0.7s forwards;
+      }
+
+      .hero-sub {
+        margin: 32px 0 0;
+        max-width: 620px;
+        font-family: var(--font-sans);
+        font-size: 11px;
+        line-height: 1.9;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        opacity: 0;
+        animation: rise 1s var(--ease) 0.8s forwards;
+      }
+      .hero-sub b {
+        font-weight: 500;
+        color: var(--heading);
+      }
+
+      .hero-coords {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 14px;
+        margin-top: 26px;
+        opacity: 0;
+        animation: rise 1s var(--ease) 0.9s forwards;
+      }
+      @media (min-width: 1024px) {
+        /* On wide screens the corner readouts already carry the coordinates */
+        .hero-coords {
+          display: none;
+        }
+      }
+
+      .hero-btn-wrap {
+        margin-top: 44px;
+        opacity: 0;
+        animation: rise 1s var(--ease) 0.95s forwards;
+      }
+      .hero-btn-wrap .arrow {
+        display: inline-block;
+        animation: bob 1.8s ease-in-out infinite;
+      }
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(4px);
+        }
+      }
+
+      /* Ticker */
+      .ticker-wrap {
+        position: absolute;
+        inset: auto 0 0 0;
+        z-index: 10;
+        opacity: 0;
+        animation: fadein 1s ease 1.4s forwards;
+      }
+      .ticker {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+        padding: 12px 0;
+      }
+      .ticker::before,
+      .ticker::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 2;
+        width: 96px;
+        pointer-events: none;
+      }
+      .ticker::before {
+        left: 0;
+        background: linear-gradient(to right, var(--surface), transparent);
+      }
+      .ticker::after {
+        right: 0;
+        background: linear-gradient(to left, var(--surface), transparent);
+      }
+      .ticker-row {
+        display: flex;
+        width: max-content;
+        gap: 48px;
+        white-space: nowrap;
+        animation: marquee 48s linear infinite;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .ticker-row span {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+        color: var(--muted);
+      }
+      .ticker-row span i {
+        height: 4px;
+        width: 4px;
+        border-radius: 999px;
+        background: var(--brand);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* WHY THIS ROUTE                                                    */
+      /* ---------------------------------------------------------------- */
+
+      .why-list {
+        margin-top: 48px;
+        display: grid;
+        gap: 18px;
+      }
+      @media (min-width: 900px) {
+        .why-list {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .why-item {
+        display: flex;
+        gap: 18px;
+        padding: 26px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        border-radius: 18px;
+        transition: border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+      }
+      .why-item:hover {
+        border-color: rgba(var(--brand-rgb), 0.35);
+        box-shadow: var(--shadow-sm);
+      }
+      .why-item .num {
+        flex-shrink: 0;
+        font-family: var(--font-sans);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--brand-dp);
+        padding-top: 3px;
+      }
+      .why-item p {
+        margin: 0;
+        font-size: 14.5px;
+        line-height: 1.75;
+        color: var(--body);
+      }
+      .why-item p b {
+        font-weight: 500;
+        color: var(--heading);
+      }
+
+      .why-alt {
+        margin-top: 22px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        border-left: 2px solid var(--brand);
+        padding: 4px 0 4px 18px;
+      }
+      .why-alt p {
+        margin: 0;
+        font-size: 13.5px;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* MAP                                                               */
+      /* ---------------------------------------------------------------- */
+
+      .map-grid {
+        margin-top: 44px;
+        display: grid;
+        gap: 32px;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .map-grid {
+          grid-template-columns: 1.45fr 1fr;
+        }
+      }
+      .map-shell {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+        padding: 16px;
+      }
+      @media (min-width: 768px) {
+        .map-shell {
+          padding: 22px;
+        }
+      }
+      .map-shell .wash {
+        position: absolute;
+        left: -96px;
+        top: 25%;
+        height: 260px;
+        width: 260px;
+        border-radius: 999px;
+        background: radial-gradient(
+          circle,
+          rgba(var(--brand-rgb), 0.07),
+          rgba(var(--brand-rgb), 0) 70%
+        );
+        pointer-events: none;
+      }
+      .map-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding: 0 8px;
+        font-family: var(--font-sans);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+      .map-head .active {
+        color: var(--brand-dp);
+        white-space: nowrap;
+      }
+      #map {
+        width: 100%;
+        user-select: none;
+        display: block;
+      }
+      .map-scroll {
+        max-width: 100%;
+      }
+      /* Below tablet the labels get illegible if the SVG shrinks freely —
+         give it a floor and let the card scroll horizontally instead. */
+      @media (max-width: 700px) {
+        .map-scroll {
+          overflow-x: auto;
+        }
+        #map {
+          min-width: 620px;
+        }
+      }
+      .map-nodes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px 8px 2px;
+      }
+      .nodebtn {
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 6px 14px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        transition: all 0.3s var(--ease);
+      }
+      .nodebtn:hover {
+        border-color: var(--heading);
+        color: var(--heading);
+      }
+      .nodebtn[aria-pressed="true"] {
+        border-color: var(--brand);
+        background: var(--brand);
+        color: #fff;
+      }
+
+      #map .node {
+        cursor: pointer;
+      }
+      #map .node .halo {
+        transition: r 0.45s var(--ease), stroke-opacity 0.45s var(--ease);
+      }
+      #map .node text {
+        transition: opacity 0.35s var(--ease);
+      }
+
+      .node-card .hero-img {
+        position: relative;
+        height: 208px;
+        width: 100%;
+        overflow: hidden;
+      }
+      @media (min-width: 768px) {
+        .node-card .hero-img {
+          height: 232px;
+        }
+      }
+      .node-card .hero-img img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      .node-card .scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, var(--surface), rgba(255, 255, 255, 0.12) 55%, transparent);
+      }
+      .node-card .badges {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        z-index: 2;
+      }
+      .node-card .body {
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+      }
+      @media (min-width: 768px) {
+        .node-card .body {
+          padding: 30px;
+        }
+      }
+      .node-card h3 {
+        margin: 8px 0 0;
+        font-size: clamp(1.5rem, 3.4vw, 1.9rem);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+      }
+      .node-card h3 .dim {
+        color: var(--muted);
+      }
+      .node-card h3 .code {
+        font-family: var(--font-sans);
+        font-size: 15px;
+        color: var(--brand-dp);
+        margin-left: 8px;
+      }
+      .node-card .coordline {
+        margin: 10px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 14px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--muted);
+      }
+      .node-card .coordline .faint {
+        color: var(--muted);
+      }
+      .node-card .hook {
+        margin: 10px 0 0;
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--body);
+      }
+      .node-card .leg {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.11em;
+        color: var(--muted);
+      }
+      .node-card .leg .ac {
+        color: var(--brand);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* FILM + ACTS                                                       */
+      /* ---------------------------------------------------------------- */
+
+      .film-head {
+        margin-top: 44px;
+        display: grid;
+      }
+      @media (min-width: 768px) {
+        .film-head {
+          grid-template-columns: 0.95fr 1.05fr;
+        }
+      }
+      .film-head .shot {
+        position: relative;
+        height: 240px;
+        overflow: hidden;
+      }
+      @media (min-width: 768px) {
+        .film-head .shot {
+          height: auto;
+          min-height: 330px;
+        }
+      }
+      .film-head .shot img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      .film-head .shot .scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, var(--surface), rgba(255, 255, 255, 0.1) 60%, transparent);
+      }
+      @media (min-width: 768px) {
+        .film-head .shot .scrim {
+          background: linear-gradient(to right, transparent, transparent 45%, rgba(255, 255, 255, 0.85));
+        }
+      }
+      .film-head .txt {
+        padding: 30px 26px;
+      }
+      @media (min-width: 768px) {
+        .film-head .txt {
+          padding: 40px;
+        }
+      }
+      .film-head .specline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--brand-dp);
+      }
+      .film-head .specline .faint {
+        color: var(--muted);
+      }
+      .film-head h3 {
+        margin: 16px 0 0;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.08;
+      }
+      .film-head h3 .it {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--brand);
+      }
+
+      .acts {
+        margin-top: 24px;
+        display: grid;
+        gap: 24px;
+      }
+      @media (min-width: 900px) {
+        .acts {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .act {
+        position: relative;
+        height: 100%;
+        padding: 30px;
+      }
+      .act .ghost {
+        position: absolute;
+        right: 22px;
+        top: 18px;
+        font-size: 60px;
+        font-weight: 300;
+        line-height: 1;
+        color: rgba(23, 19, 15, 0.06);
+        transition: color 0.5s var(--ease);
+      }
+      .act:hover .ghost {
+        color: rgba(var(--brand-rgb), 0.16);
+      }
+      .act .icon {
+        display: flex;
+        height: 44px;
+        width: 44px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid rgba(var(--brand-rgb), 0.3);
+        background: rgba(var(--brand-rgb), 0.07);
+        color: var(--brand);
+      }
+      .act h4 {
+        margin: 8px 0 0;
+        font-size: 22px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+      .act ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 12px;
+      }
+      .act li {
+        display: flex;
+        gap: 12px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--body);
+      }
+      .act li::before {
+        content: "";
+        flex-shrink: 0;
+        margin-top: 9px;
+        height: 4px;
+        width: 4px;
+        border-radius: 999px;
+        background: var(--brand);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* SELECTED WORK                                                     */
+      /* ---------------------------------------------------------------- */
+
+      .work-grid {
+        margin-top: 44px;
+        display: grid;
+        gap: 24px;
+      }
+      @media (min-width: 800px) {
+        .work-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .work-card {
+        display: flex;
+        flex-direction: column;
+      }
+      .work-media {
+        position: relative;
+        /* The source cuts are landscape. A 9:16 box cropped them to a strip
+           down the middle and threw away the frame. */
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        overflow: hidden;
+        background: var(--paper-band);
+      }
+      .work-media video {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      .work-media .label {
+        position: absolute;
+        left: 16px;
+        top: 16px;
+        z-index: 4;
+        pointer-events: none;
+      }
+
+      /* The whole frame is a link to the original post. It sits above the
+         video but below the sound toggle, so muting never navigates away. */
+      .work-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(23, 19, 15, 0);
+        transition: background 0.4s var(--ease);
+      }
+      .work-overlay:hover {
+        background: rgba(23, 19, 15, 0.3);
+      }
+      .work-overlay .cue {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.95);
+        color: var(--heading);
+        padding: 9px 17px;
+        font-size: 10px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+      }
+      .work-overlay:hover .cue,
+      .work-overlay:focus-visible .cue {
+        opacity: 1;
+        transform: none;
+      }
+      /* Touch screens have no hover, so show the cue outright */
+      @media (hover: none) {
+        .work-overlay .cue {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .sound-toggle {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        z-index: 4;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 6px 12px;
+        font-family: var(--font-sans);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--heading);
+        transition: all 0.3s;
+      }
+      .sound-toggle:hover {
+        border-color: var(--brand);
+        color: var(--brand-dp);
+      }
+      .work-body {
+        padding: 22px 24px 26px;
+        display: grid;
+        gap: 12px;
+      }
+      .work-stats {
+        display: grid;
+        gap: 7px;
+      }
+      .work-stat {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+      .work-stat .plat {
+        color: var(--muted);
+      }
+      .work-stat .val {
+        color: var(--heading);
+      }
+      .work-proof {
+        margin: 0;
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: var(--body);
+      }
+      .work-link {
+        justify-self: start;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid var(--line);
+        font-size: 10px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        transition: color 0.3s, border-color 0.3s;
+      }
+      .work-link:hover {
+        color: var(--brand-dp);
+        border-color: var(--brand);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* DELIVERABLES                                                      */
+      /* ---------------------------------------------------------------- */
+
+      .deliv-grid {
+        margin-top: 44px;
+        display: grid;
+        gap: 24px;
+      }
+      @media (min-width: 900px) {
+        .deliv-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .deliv {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 30px;
+      }
+      .deliv .wash {
+        position: absolute;
+        right: -64px;
+        top: -64px;
+        height: 160px;
+        width: 160px;
+        border-radius: 999px;
+        background: radial-gradient(
+          circle,
+          rgba(var(--brand-rgb), 0.09),
+          rgba(var(--brand-rgb), 0) 70%
+        );
+        pointer-events: none;
+      }
+      .deliv .top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .deliv .icon {
+        display: flex;
+        height: 44px;
+        width: 44px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid rgba(var(--brand-rgb), 0.3);
+        background: rgba(var(--brand-rgb), 0.07);
+        color: var(--brand);
+      }
+      .deliv .headline {
+        margin-top: 30px;
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .deliv .count {
+        font-family: var(--font-display);
+        font-size: 38px;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        color: var(--brand);
+      }
+      .deliv h3 {
+        font-size: 19px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+      .deliv .spec {
+        margin-top: 8px;
+      }
+      .deliv .body {
+        margin: 22px 0 0;
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--body);
+      }
+      .deliv ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+        margin-top: auto;
+      }
+      .deliv li {
+        display: flex;
+        gap: 11px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--body);
+      }
+      .deliv li::before {
+        content: "◆";
+        flex-shrink: 0;
+        font-size: 7px;
+        line-height: 2.9;
+        color: var(--brand);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* INVESTMENT                                                        */
+      /* ---------------------------------------------------------------- */
+
+      .invest {
+        margin-top: 44px;
+        display: grid;
+        gap: 24px;
+      }
+      @media (min-width: 1000px) {
+        .invest {
+          grid-template-columns: 0.85fr 1.15fr;
+          align-items: start;
+        }
+      }
+      .total-card {
+        padding: 36px 30px;
+        text-align: left;
+      }
+      .total-card .amount {
+        font-family: var(--font-display);
+        margin-top: 18px;
+        font-size: clamp(3rem, 8vw, 4.5rem);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: var(--heading);
+      }
+      .total-card .amount .cur {
+        font-size: 0.45em;
+        color: var(--brand);
+        vertical-align: super;
+        margin-right: 4px;
+      }
+      .total-card .note {
+        margin: 24px 0 0;
+        font-size: 13.5px;
+        line-height: 1.75;
+        color: var(--body);
+      }
+      .lines {
+        padding: 12px 8px;
+      }
+      .line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 19px 22px;
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .line:last-of-type {
+        border-bottom: none;
+      }
+      .line .desc {
+        font-size: 14.5px;
+        line-height: 1.6;
+        color: var(--heading);
+      }
+      .line .desc small {
+        display: block;
+        margin-top: 4px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--muted);
+      }
+      .line .amt {
+        flex-shrink: 0;
+        font-family: var(--font-sans);
+        font-size: 15px;
+        letter-spacing: 0.04em;
+        color: var(--brand-dp);
+      }
+      .provided {
+        margin-top: 20px;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        border-radius: 16px;
+        border: 1px solid rgba(var(--brand-rgb), 0.3);
+        background: rgba(var(--brand-rgb), 0.05);
+        padding: 20px 22px;
+      }
+      .provided p {
+        margin: 0;
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: var(--body);
+      }
+      .provided p b {
+        font-weight: 500;
+        color: var(--heading);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* TIMELINE                                                          */
+      /* ---------------------------------------------------------------- */
+
+      .rail {
+        position: relative;
+        margin-top: 52px;
+        display: grid;
+        gap: 26px;
+      }
+      @media (min-width: 900px) {
+        .rail {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        /* The connecting line runs behind the markers */
+        .rail::before {
+          content: "";
+          position: absolute;
+          left: 6%;
+          right: 6%;
+          top: 11px;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            rgba(var(--brand-rgb), 0.18),
+            rgba(var(--brand-rgb), 0.75),
+            rgba(var(--brand-rgb), 0.18)
+          );
+        }
+      }
+      .stop {
+        position: relative;
+        padding-left: 34px;
+      }
+      @media (min-width: 900px) {
+        .stop {
+          padding-left: 0;
+          padding-top: 40px;
+        }
+      }
+      .stop .marker {
+        position: absolute;
+        left: 0;
+        top: 4px;
+        height: 22px;
+        width: 22px;
+        border-radius: 999px;
+        border: 1px solid rgba(var(--brand-rgb), 0.5);
+        background: var(--paper-band);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      @media (min-width: 900px) {
+        .stop .marker {
+          top: 0;
+        }
+      }
+      .stop .marker::after {
+        content: "";
+        height: 7px;
+        width: 7px;
+        border-radius: 999px;
+        background: var(--brand);
+      }
+      /* Vertical connector on mobile */
+      @media (max-width: 899px) {
+        .stop::before {
+          content: "";
+          position: absolute;
+          left: 11px;
+          top: 26px;
+          bottom: -26px;
+          width: 1px;
+          background: rgba(var(--brand-rgb), 0.28);
+        }
+        .stop:last-child::before {
+          display: none;
+        }
+      }
+      .stop .when {
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+        color: var(--brand-dp);
+      }
+      .stop p {
+        margin: 10px 0 0;
+        font-size: 14.5px;
+        line-height: 1.7;
+        color: var(--body);
+      }
+
+      .short-notice {
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(var(--brand-rgb), 0.35);
+        background: rgba(var(--brand-rgb), 0.06);
+        padding: 28px 30px;
+      }
+      .short-notice .big {
+        font-family: var(--font-display);
+        font-size: clamp(1.3rem, 3.4vw, 1.8rem);
+        font-style: italic;
+        font-weight: 400;
+        line-height: 1.32;
+        letter-spacing: -0.015em;
+        color: var(--heading);
+        margin: 0;
+        flex: 1 1 320px;
+      }
+      .short-notice .why {
+        margin: 0;
+        flex: 1 1 320px;
+        font-size: 13.5px;
+        line-height: 1.75;
+        color: var(--body);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* CREATOR                                                           */
+      /* ---------------------------------------------------------------- */
+
+      .creator-grid {
+        margin-top: 48px;
+        display: grid;
+        gap: 28px;
+        align-items: start;
+      }
+      @media (min-width: 1000px) {
+        .creator-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .portrait {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        width: 100%;
+        overflow: hidden;
+      }
+      .portrait img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      /* Text sits over the photograph here, so this scrim stays dark. */
+      .portrait .scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(23, 19, 15, 0.78), transparent 58%);
+      }
+      .portrait .name {
+        position: absolute;
+        left: 24px;
+        bottom: 22px;
+      }
+      .portrait .name p {
+        margin: 0;
+      }
+      .portrait .name .handle {
+        font-family: var(--font-display);
+        font-size: 26px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        color: #fff;
+      }
+      .portrait .name .kicker {
+        color: #ff8a8a;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .metric {
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 24px;
+        box-shadow: var(--shadow-sm);
+        transition: border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+      }
+      .metric:hover {
+        border-color: rgba(var(--brand-rgb), 0.35);
+        box-shadow: var(--shadow-lg);
+      }
+      .metric .val {
+        font-family: var(--font-display);
+        margin: 16px 0 0;
+        font-size: clamp(1.7rem, 4vw, 2.2rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        color: var(--heading);
+      }
+      .metric .lab {
+        margin: 6px 0 0;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--heading);
+      }
+      .metric .sub {
+        margin: 4px 0 0;
+        font-size: 11.5px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .bars {
+        margin-top: 26px;
+        display: grid;
+        gap: 22px;
+      }
+      .bar .top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+      .bar .top .lab {
+        font-size: 13px;
+        color: var(--body);
+      }
+      .bar .top .pct {
+        font-family: var(--font-display);
+        font-size: 15px;
+        color: var(--heading);
+      }
+      .bar .track {
+        margin-top: 10px;
+        height: 3px;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(23, 19, 15, 0.09);
+      }
+      .bar .fill {
+        height: 100%;
+        width: 0;
+        border-radius: 999px;
+        background: var(--brand);
+        transition: width 1.2s var(--ease);
+        transition-delay: var(--d, 0s);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* CTA                                                               */
+      /* ---------------------------------------------------------------- */
+
+      .cta-wash {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        /* Clamped so the wash never widens the page on a narrow screen */
+        height: min(560px, 88vw);
+        width: min(560px, 88vw);
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        background: radial-gradient(
+          circle,
+          rgba(var(--brand-rgb), 0.1),
+          rgba(var(--brand-rgb), 0) 70%
+        );
+        pointer-events: none;
+      }
+      .cta-card {
+        position: relative;
+        margin: 0 auto;
+        max-width: 760px;
+        border-radius: 28px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: var(--shadow-lg);
+        padding: 40px 28px;
+        text-align: center;
+      }
+      @media (min-width: 768px) {
+        .cta-card {
+          padding: 64px;
+        }
+      }
+      .cta-card .glyph {
+        margin: 0 auto;
+        display: flex;
+        height: 48px;
+        width: 48px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        border: 1px solid rgba(var(--brand-rgb), 0.3);
+        background: rgba(var(--brand-rgb), 0.07);
+        color: var(--brand);
+      }
+      .cta-card h2 {
+        margin: 34px 0 0;
+        font-size: clamp(2rem, 6vw, 3rem);
+        font-weight: 300;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+      }
+      .cta-card h2 .dim {
+        color: var(--brand);
+      }
+      .cta-card .sub {
+        margin: 22px auto 0;
+        max-width: 440px;
+        font-size: 14.5px;
+        line-height: 1.75;
+        color: var(--body);
+      }
+      .cta-actions {
+        margin-top: 42px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+      }
+      @media (min-width: 640px) {
+        .cta-actions {
+          flex-direction: row;
+          justify-content: center;
+        }
+        .cta-actions .btn {
+          width: auto;
+        }
+      }
+      .cta-actions .btn {
+        width: 100%;
+      }
+      .cta-foot {
+        margin-top: 44px;
+        border-top: 1px solid var(--line);
+        padding-top: 34px;
+        display: grid;
+        gap: 8px;
+        justify-items: center;
+      }
+      .cta-foot a.email {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 15px;
+        color: var(--heading);
+        transition: color 0.3s;
+      }
+      .cta-foot a.email:hover {
+        color: var(--brand);
+      }
+
+      .colophon {
+        margin: 72px auto 0;
+        max-width: 760px;
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+        text-align: center;
+      }
+      .colophon .wordmark {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--muted);
+      }
+      .colophon .wordmark i {
+        height: 1px;
+        width: 40px;
+        background: var(--line);
+      }
+      .colophon .fine {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+      }
+
+      /* ---------------------------------------------------------------- */
+      /* MOTION PREFERENCES                                                */
+      /* ---------------------------------------------------------------- */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+        h1.hero-title,
+        .hero-pill,
+        .hero-sub,
+        .hero-coords,
+        .hero-btn-wrap,
+        .hero-rule,
+        .readout,
+        .ticker-wrap,
+        .hud-corner {
+          opacity: 1;
+          filter: none;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="progress" aria-hidden="true"></div>
+
+    <header class="nav">
+      <nav>
+        <button class="brandmark" data-to="top" aria-label="Back to top">
+          <span class="dot" aria-hidden="true"></span>17S
+        </button>
+        <div class="navlinks">
+          <button data-to="route">Route</button>
+          <button data-to="film">Film</button>
+          <button data-to="work">Work</button>
+          <button data-to="package">Package</button>
+          <button data-to="timeline">Timeline</button>
+          <button data-to="creator">Creator</button>
+        </div>
+        <button class="nav-cta" data-to="contact">Contact</button>
+      </nav>
+    </header>
+
+    <!-- ================================================================ -->
+    <!-- HERO                                                             -->
+    <!-- ================================================================ -->
+    <section class="hero" id="top">
+      <div class="hero-field" aria-hidden="true">
+        <div class="blob1"></div>
+        <div class="blob2"></div>
+        <div class="grid"></div>
+        <div class="fade"></div>
+      </div>
+
+      <div class="hud-corner hud-tl" aria-hidden="true"></div>
+      <div class="hud-corner hud-tr" aria-hidden="true"></div>
+      <div class="hud-corner hud-bl" aria-hidden="true"></div>
+      <div class="hud-corner hud-br" aria-hidden="true"></div>
+
+      <div class="readout left" aria-hidden="true">
+        <p class="hl">[ <span data-r="origin.coords">32.8998° N, 97.0403° W</span> ]</p>
+        <p><span data-r="origin.code">DFW</span> · Origin</p>
+        <p class="gap hl">[ <span data-r="dest.coords">33.9399° S, 151.1753° E</span> ]</p>
+        <p><span data-r="dest.code">SYD</span> · Arrival</p>
+      </div>
+
+      <div class="readout right" aria-hidden="true">
+        <p class="hl">Sys / Nominal</p>
+        <p>01 Route · 01 Hero Reel</p>
+        <p>03 Ambient Reels</p>
+        <p class="gap"><span data-r="origin.aircraftShort">A380</span> · Southbound</p>
+      </div>
+
+      <div class="hero-inner" id="heroInner">
+        <div class="hero-pill">
+          <span class="live" aria-hidden="true"></span>
+          <span class="txt">Prepared for Qantas · 2026</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span data-r="title.line1">Seventeen</span><br />
+          <span class="grad" data-r="title.line2">Hours South</span>
+        </h1>
+
+        <div class="hero-rule"><div class="status"></div></div>
+
+        <p class="hero-sub">
+          A single-journey campaign proposal by <b>@legefilms</b>
+        </p>
+
+        <div class="hero-coords">
+          <span class="tag"
+            ><span data-r="origin.code">DFW</span> ·
+            <span data-r="origin.coords">32.8998° N, 97.0403° W</span></span
+          >
+          <span class="tag"
+            ><span data-r="dest.code">SYD</span> ·
+            <span data-r="dest.coords">33.9399° S, 151.1753° E</span></span
+          >
+        </div>
+
+        <div class="hero-btn-wrap">
+          <button class="btn btn-primary" data-to="route">
+            <span class="shine" aria-hidden="true"></span>
+            Read the proposal
+            <span class="arrow" aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="ticker-wrap" aria-hidden="true">
+        <div class="ticker"><div class="ticker-row" id="tickerRow"></div></div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- WHY THIS ROUTE                                                   -->
+    <!-- ================================================================ -->
+    <section class="section" id="route">
+      <div class="reveal">
+        <div class="eyebrow"><i></i><span>Why this route</span></div>
+        <h2 class="h2">
+          One aircraft.<br />
+          <span class="dim">One ocean. One film.</span>
+        </h2>
+      </div>
+
+      <div class="why-list">
+        <div class="reveal why-item" style="--d: 0s">
+          <span class="num">01</span>
+          <p data-r="copy.why1">
+            <b>Dallas/Fort Worth is one of Qantas's two principal US gateways</b> — and one
+            of only two flown by the A380. Los Angeles is the other. Everything else in the
+            US network is a twin-aisle.
+          </p>
+        </div>
+        <div class="reveal why-item" style="--d: 0.08s">
+          <span class="num">02</span>
+          <p data-r="copy.why2">
+            <b>Qantas is the only carrier operating four-cabin A380 service between the
+            United States and Australia.</b> First, Business, Premium Economy and Economy on
+            the largest passenger aircraft ever built — a genuine product differentiator that
+            almost no traveller has seen from the inside.
+          </p>
+        </div>
+        <div class="reveal why-item" style="--d: 0.16s">
+          <span class="num">03</span>
+          <p data-r="copy.why3">
+            <b>At roughly seventeen hours it is one of the longest routes in the world.</b>
+            That length is the asset, not the obstacle. It is the only context in which the
+            cabin can be shown as a place rather than a seat.
+          </p>
+        </div>
+        <div class="reveal why-item" style="--d: 0.24s">
+          <span class="num">04</span>
+          <p data-r="copy.why4">
+            <b>The timing is the booking window.</b> North American demand for the Southern
+            Hemisphere summer is decided in late autumn — not in January. Published in
+            November, this campaign lands while the decision is still open.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal why-alt" style="--d: 0.3s">
+        <p>
+          The same structure applies to San Francisco–Sydney, or any single long-haul leg,
+          if network priorities point elsewhere. One route, one film, one approval round —
+          the origin is a variable, not a premise.
+        </p>
+      </div>
+
+      <!-- ============================ MAP ============================ -->
+      <div class="map-grid">
+        <div class="reveal" style="--d: 0.1s">
+          <div class="map-shell">
+            <div class="wash" aria-hidden="true"></div>
+            <div class="map-head">
+              <span>Pacific Sector · Equirectangular</span>
+              <span class="active">01 Active Sector</span>
+            </div>
+            <div class="map-scroll scroll-x">
+              <svg
+                id="map"
+                viewBox="43 40 620 420"
+                role="img"
+                aria-label="Route map: Dallas/Fort Worth to Sydney across the Pacific"
+              ></svg>
+            </div>
+            <div class="map-nodes" id="mapNodes"></div>
+          </div>
+        </div>
+
+        <div class="reveal" style="--d: 0.18s">
+          <article class="card node-card" id="nodeCard"></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- THE FILM                                                         -->
+    <!-- ================================================================ -->
+    <div class="band">
+      <section class="section" id="film">
+        <div class="reveal">
+          <div class="eyebrow"><i></i><span>The film</span></div>
+          <h2 class="h2">
+            The crossing <span class="dim">is</span> the story.
+          </h2>
+          <p class="lede">
+            One hero Reel, three acts, shot on the southbound leg. The premise is scale —
+            the largest passenger aircraft ever built, crossing the largest ocean on earth,
+            to a city on the far side of everything.
+          </p>
+        </div>
+
+        <div class="reveal card film-head" style="--d: 0.08s">
+          <div class="shot media-wrap">
+            <img
+              src="./assets/cabin-a380.jpg"
+              alt="Reference frame — A380 upper deck cabin at cruise"
+              loading="lazy"
+              data-media
+            />
+            <div class="scrim" aria-hidden="true"></div>
+            <div class="refcap">Treatment reference · direction, not final frames</div>
+          </div>
+
+          <div class="txt">
+            <div class="specline">
+              <span>Hero Reel</span>
+              <span class="faint" data-r="route.legLabel">DFW → SYD</span>
+              <span class="faint">60s+</span>
+              <span class="faint" data-r="origin.aircraft">Airbus A380</span>
+            </div>
+            <h3>
+              <span data-r="title.line1">Seventeen</span>
+              <span class="it" data-r="title.line2">Hours South</span>
+            </h3>
+            <p class="meta" style="margin: 10px 0 0">
+              <span data-r="origin.city">Dallas/Fort Worth</span> →
+              <span data-r="dest.city">Sydney</span> ·
+              <span data-r="route.duration">≈17 hours</span> · Southbound
+            </p>
+            <p class="lede" style="margin-top: 22px" data-r="copy.logline">
+              The largest passenger aircraft ever built, crossing the largest ocean on
+              earth, to a city on the far side of everything. Seventeen hours treated as a
+              destination in its own right.
+            </p>
+            <div style="margin-top: 26px"><div class="status"></div></div>
+          </div>
+        </div>
+
+        <div class="acts" id="acts"></div>
+      </section>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- SELECTED WORK                                                    -->
+    <!-- ================================================================ -->
+    <section class="section" id="work">
+      <div class="reveal">
+        <div class="eyebrow"><i></i><span>Selected work</span></div>
+        <h2 class="h2">Three pieces, <span class="dim">three proofs.</span></h2>
+        <p class="lede">
+          Self-hosted so they play behind a corporate firewall and survive being forwarded.
+          Each one is here to prove a specific thing this campaign asks you to believe.
+        </p>
+      </div>
+
+      <div class="work-grid" id="workGrid"></div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- DELIVERABLES                                                     -->
+    <!-- ================================================================ -->
+    <div class="band">
+      <section class="section" id="package">
+        <div class="reveal">
+          <div class="eyebrow"><i></i><span>The package</span></div>
+          <h2 class="h2">Four assets. <span class="dim">One approval round.</span></h2>
+          <p class="lede">
+            One Reel that carries the argument, three that live natively in the feed, and a
+            license that covers the organic and paid rollout for a full quarter.
+          </p>
+        </div>
+
+        <div class="deliv-grid" id="delivGrid"></div>
+      </section>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- INVESTMENT                                                       -->
+    <!-- ================================================================ -->
+    <section class="section" id="investment">
+      <div class="reveal">
+        <div class="eyebrow"><i></i><span>Investment</span></div>
+        <h2 class="h2">Campaign total.</h2>
+      </div>
+
+      <div class="invest">
+        <div class="reveal card total-card" style="--d: 0.06s">
+          <p class="kicker" style="margin: 0">All-in, fixed</p>
+          <p class="amount"><span class="cur">$</span>8,500</p>
+          <div style="margin-top: 22px"><div class="status"></div></div>
+          <p class="note">
+            One route, one hero film, three ambient Reels, and a three-month commercial
+            license across organic and paid. No staged fees, no per-asset add-ons.
+          </p>
+        </div>
+
+        <div class="reveal" style="--d: 0.14s">
+          <div class="card lines">
+            <div class="line">
+              <span class="desc"
+                >Creative development
+                <small>Script, storyboard, approval round</small></span
+              >
+              <span class="amt">$1,500</span>
+            </div>
+            <div class="line">
+              <span class="desc"
+                >Production <small>Single journey, on location</small></span
+              >
+              <span class="amt">$3,000</span>
+            </div>
+            <div class="line">
+              <span class="desc"
+                >Post <small>Edit, colour, sound design across 4 assets</small></span
+              >
+              <span class="amt">$2,500</span>
+            </div>
+            <div class="line">
+              <span class="desc"
+                >Commercial license <small>3 months, organic + paid</small></span
+              >
+              <span class="amt">$1,500</span>
+            </div>
+          </div>
+
+          <div class="provided">
+            <span class="kicker" style="flex-shrink: 0; padding-top: 2px">By Qantas</span>
+            <p data-r="copy.provided">
+              <b
+                >Round-trip fare <span data-r="route.legLabelShort">DFW–SYD</span>, premium
+                cabin</b
+              >, plus cabin access for filming. Everything else above is covered by the
+              campaign fee.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- TIMELINE                                                         -->
+    <!-- ================================================================ -->
+    <div class="band">
+      <section class="section" id="timeline">
+        <div class="reveal">
+          <div class="eyebrow"><i></i><span>Timeline</span></div>
+          <h2 class="h2">
+            Built to move <span class="dim">inside a quarter.</span>
+          </h2>
+        </div>
+
+        <div class="rail">
+          <div class="reveal stop" style="--d: 0s">
+            <span class="marker" aria-hidden="true"></span>
+            <p class="when">T–3 weeks</p>
+            <p>
+              Pre-production opens three weeks before departure. Script and storyboard go
+              to Qantas for the single approval round.
+            </p>
+          </div>
+          <div class="reveal stop" style="--d: 0.08s">
+            <span class="marker" aria-hidden="true"></span>
+            <p class="when">Oct–Nov 2026</p>
+            <p data-r="copy.tlFilm">
+              Filming on the southbound leg — late October or November 2026, on the daily
+              A380 service.
+            </p>
+          </div>
+          <div class="reveal stop" style="--d: 0.16s">
+            <span class="marker" aria-hidden="true"></span>
+            <p class="when">Booking window</p>
+            <p>
+              Hero Reel delivered and published inside the Southern Hemisphere summer
+              booking window, while North American demand is still being decided.
+            </p>
+          </div>
+          <div class="reveal stop" style="--d: 0.24s">
+            <span class="marker" aria-hidden="true"></span>
+            <p class="when">Following weeks</p>
+            <p>
+              Ambient Reels roll out across the following weeks, extending the campaign's
+              shelf life well past the hero drop.
+            </p>
+          </div>
+        </div>
+
+        <div class="reveal short-notice" style="--d: 0.3s">
+          <p class="big">Available to travel on short notice.</p>
+          <p class="why">
+            Pre-production needs three weeks, not three months. If there is unspent budget
+            in this quarter, this campaign can be shot, cut and published inside it.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- CREATOR                                                          -->
+    <!-- ================================================================ -->
+    <section class="section" id="creator">
+      <div class="reveal">
+        <div class="eyebrow"><i></i><span>The creator</span></div>
+        <h2 class="h2">Who is behind the lens.</h2>
+      </div>
+
+      <div class="creator-grid">
+        <div class="reveal card" style="--d: 0.08s">
+          <div class="portrait media-wrap">
+            <img
+              src="./assets/creator-profile.jpg"
+              alt="@legefilms — director and cinematographer"
+              loading="lazy"
+              data-media
+            />
+            <div class="scrim" aria-hidden="true"></div>
+            <div class="name">
+              <p class="handle">@legefilms</p>
+              <p class="kicker" style="margin-top: 5px">Director · Cinematographer</p>
+            </div>
+          </div>
+          <div style="padding: 28px">
+            <p class="lede" style="margin: 0">
+              A travel filmmaker working in narrative documentary — scripted arcs,
+              cinema-grade capture, and a colour signature built per campaign rather than
+              pulled off a preset shelf. Written before it is shot, and cut to hold
+              attention well past the first three seconds.
+            </p>
+            <div style="margin: 24px 0"><div class="rule"></div></div>
+            <a
+              class="btn btn-ghost"
+              style="padding: 11px 20px"
+              href="https://www.instagram.com/legefilms/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram (@legefilms) ↗</a
+            >
+          </div>
+        </div>
+
+        <div class="reveal" style="--d: 0.16s">
+          <div class="metrics" id="metrics"></div>
+
+          <div class="card" style="padding: 30px; margin-top: 18px">
+            <p class="kicker" style="margin: 0">Audience composition</p>
+            <div class="bars" id="bars"></div>
+            <p
+              style="
+                margin: 28px 0 0;
+                border-top: 1px solid var(--line);
+                padding-top: 20px;
+                font-size: 11.5px;
+                line-height: 1.7;
+                color: var(--muted);
+              "
+            >
+              Creator-reported platform analytics, as of 1 September 2026. Full media kit
+              and raw platform exports available on request.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- CTA                                                              -->
+    <!-- ================================================================ -->
+    <section class="section" id="contact" style="padding-top: 96px; padding-bottom: 128px">
+      <div class="cta-wash" aria-hidden="true"></div>
+
+      <div class="reveal" style="position: relative">
+        <div class="cta-card">
+          <div class="glyph" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.8 19.2 16 11l3.5-3.5a2.12 2.12 0 0 0-3-3L13 8 4.8 6.2a.5.5 0 0 0-.5.8l3.2 4.2-2 2-2.2-.6a.5.5 0 0 0-.5.8L5 16l2.6 2.2a.5.5 0 0 0 .8-.5l-.6-2.2 2-2 4.2 3.2a.5.5 0 0 0 .8-.5Z" />
+            </svg>
+          </div>
+
+          <h2>Ready to <span class="dim">go south?</span></h2>
+
+          <p class="sub">
+            A 30-minute walkthrough of the treatment, the shoot plan and the delivery
+            timeline. One call is usually enough to green-light or pass.
+          </p>
+
+          <div class="cta-actions">
+            <a class="btn btn-primary" id="scheduleBtn" href="#">
+              <span class="shine" aria-hidden="true"></span>
+              Grab 30 minutes?
+            </a>
+            <a
+              class="btn btn-ghost"
+              href="https://www.instagram.com/legefilms/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram ↗</a
+            >
+          </div>
+
+          <div class="cta-foot">
+            <a class="email" id="emailLink" href="#">geri@legefilms.com</a>
+            <p class="kicker" style="margin: 0; color: var(--muted)">@legefilms</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal colophon" style="--d: 0.12s">
+        <div class="wordmark">
+          <i></i><span data-r="title.full">Seventeen Hours South</span><i></i>
+        </div>
+        <p class="fine">Prepared for Qantas · 2026</p>
+      </div>
+    </section>
+
+    <noscript>
+      <div
+        style="
+          padding: 40px 24px;
+          text-align: center;
+          font-family: monospace;
+          color: #6d6458;
+          border-top: 1px solid rgba(23, 19, 15, 0.13);
+        "
+      >
+        Some interactive elements (route map, showreels) need JavaScript. The proposal text
+        above is complete without it — or request the PDF one-sheet.
+      </div>
+    </noscript>
+
+    <script>
+      "use strict";
+
+      /* ====================================================================
+         1. ROUTE CONFIG — THE ONE-PLACE EDIT
+
+         Change ORIGIN_CODE to re-point the entire deck. Every coordinate,
+         label, headline, map node, act beat and price note is derived from
+         the object below. Nothing else in this file needs touching.
+
+         "DFW" → Dallas/Fort Worth, Airbus A380, ~17 hours
+         "SFO" → San Francisco, Boeing 787-9, ~15 hours
+
+         NOTE on the SFO preset: San Francisco–Sydney is not an A380 route,
+         so its commercial argument is genuinely different (see copy below).
+         Read those four lines before sending an SFO version.
+         ================================================================= */
+
+      const ORIGIN_CODE = "DFW";
+
+      const DESTINATION = {
+        code: "SYD",
+        city: "Sydney",
+        country: "Australia",
+        airport: "Sydney Kingsford Smith",
+        lon: 151.1753,
+        lat: -33.9399,
+        coords: "33.9399° S, 151.1753° E",
+        label: "Arrival · Southern Hemisphere",
+        img: "./assets/destination-syd.jpg",
+        hook:
+          "Harbour light, salt air, and a city that was a full day away and is now simply here. The arrival is the payoff the whole crossing has been setting up — the moment the distance stops being an abstraction and becomes a place.",
+      };
+
+      const ORIGINS = {
+        DFW: {
+          code: "DFW",
+          city: "Dallas/Fort Worth",
+          cityShort: "Dallas",
+          country: "Texas",
+          airport: "Dallas/Fort Worth International",
+          lon: -97.0403,
+          lat: 32.8998,
+          coords: "32.8998° N, 97.0403° W",
+          label: "US Gateway · A380",
+          img: "./assets/origin-dfw.jpg",
+          hook:
+            "One of two Qantas gateways in the United States flown by the A380, and the start of one of the longest sectors in the world. Dusk departure, an aircraft that does not fit in the window, and seventeen hours of Pacific ahead.",
+          aircraft: "Airbus A380",
+          aircraftShort: "A380",
+          duration: "≈17 hours",
+          hoursWord: "Seventeen",
+          title: { line1: "Seventeen", line2: "Hours South", full: "Seventeen Hours South" },
+          copy: {
+            why1:
+              "<b>Dallas/Fort Worth is one of Qantas's two principal US gateways</b> — and one of only two flown by the A380. Los Angeles is the other. Everything else in the US network is a twin-aisle.",
+            why2:
+              "<b>Qantas is the only carrier operating four-cabin A380 service between the United States and Australia.</b> First, Business, Premium Economy and Economy on the largest passenger aircraft ever built — a genuine product differentiator that almost no traveller has seen from the inside.",
+            why3:
+              "<b>At roughly seventeen hours it is one of the longest routes in the world.</b> That length is the asset, not the obstacle. It is the only context in which the cabin can be shown as a place rather than a seat.",
+            why4:
+              "<b>The timing is the booking window.</b> North American demand for the Southern Hemisphere summer is decided in late autumn — not in January. Published in November, this campaign lands while the decision is still open.",
+            logline:
+              "The largest passenger aircraft ever built, crossing the largest ocean on earth, to a city on the far side of everything. Seventeen hours treated as a destination in its own right.",
+            provided:
+              "<b>Round-trip fare DFW–SYD, premium cabin</b>, plus cabin access for filming. Everything else above is covered by the campaign fee.",
+            tlFilm:
+              "Filming on the southbound leg — late October or November 2026, on the daily A380 service.",
+          },
+          acts: [
+            {
+              numeral: "Act I",
+              title: "Boarding the Giant",
+              beats: [
+                "DFW at dusk — the gate, the tail, the scale that will not fit the frame",
+                "The walk toward an aircraft that doesn't fit in the window",
+                "The upper deck entered as an arrival, not a transit",
+              ],
+            },
+            {
+              numeral: "Act II",
+              title: "Seventeen Hours",
+              beats: [
+                "The cabin at cruise — four classes, one aircraft, deliberate quiet",
+                "Dining as craft: the pour, the plate, the unhurried service",
+                "The long dark, then the Pacific with nothing in it",
+              ],
+            },
+            {
+              numeral: "Act III",
+              title: "The Far Side",
+              beats: [
+                "Descent into harbour light, the hemisphere flipped",
+                "Salt air, ferry wake, sandstone warm at the waterline",
+                "A city that was a full day away and is now simply here",
+              ],
+            },
+          ],
+        },
+
+        SFO: {
+          code: "SFO",
+          city: "San Francisco",
+          cityShort: "San Francisco",
+          country: "California",
+          airport: "San Francisco International",
+          lon: -122.379,
+          lat: 37.6213,
+          coords: "37.6213° N, 122.3790° W",
+          label: "US Gateway · Pacific",
+          img: "./assets/origin-sfo.jpg",
+          hook:
+            "Qantas's Northern California gateway and the shortest Pacific crossing in the US network. Evening departure over the fog line, and fifteen hours of open ocean before the hemisphere flips.",
+          aircraft: "Boeing 787-9 Dreamliner",
+          aircraftShort: "787-9",
+          duration: "≈15 hours",
+          hoursWord: "Fifteen",
+          title: { line1: "Fifteen", line2: "Hours South", full: "Fifteen Hours South" },
+          copy: {
+            why1:
+              "<b>San Francisco is Qantas's Northern California gateway</b> — the closest US mainland departure point to Sydney, and the one that serves the highest-value leisure and business corridor in the country.",
+            why2:
+              "<b>The 787-9 Business Suite is the product almost no US traveller has seen from the inside.</b> A direct, single-aircraft crossing to Australia with a cabin that stands up to a full night in the seat.",
+            why3:
+              "<b>At roughly fifteen hours it remains one of the longest routes in the world.</b> That length is the asset, not the obstacle. It is the only context in which the cabin can be shown as a place rather than a seat.",
+            why4:
+              "<b>The timing is the booking window.</b> North American demand for the Southern Hemisphere summer is decided in late autumn — not in January. Published in November, this campaign lands while the decision is still open.",
+            logline:
+              "Fifteen hours of open Pacific to a city on the far side of everything — the crossing treated as a destination in its own right rather than the gap between two of them.",
+            provided:
+              "<b>Round-trip fare SFO–SYD, premium cabin</b>, plus cabin access for filming. Everything else above is covered by the campaign fee.",
+            tlFilm:
+              "Filming on the southbound leg — late October or November 2026, on the daily 787-9 service.",
+          },
+          acts: [
+            {
+              numeral: "Act I",
+              title: "Boarding for the Pacific",
+              beats: [
+                "San Francisco at dusk — fog on the bay, the international pier",
+                "The walk toward the last aircraft before the ocean",
+                "The cabin door as a threshold, not a queue",
+              ],
+            },
+            {
+              numeral: "Act II",
+              title: "Fifteen Hours",
+              beats: [
+                "The cabin at cruise — privacy, texture, deliberate quiet",
+                "Dining as craft: the pour, the plate, the unhurried service",
+                "The long dark, then the Pacific with nothing in it",
+              ],
+            },
+            {
+              numeral: "Act III",
+              title: "The Far Side",
+              beats: [
+                "Descent into harbour light, the hemisphere flipped",
+                "Salt air, ferry wake, sandstone warm at the waterline",
+                "A city that was a full day away and is now simply here",
+              ],
+            },
+          ],
+        },
+      };
+
+      const ORIGIN = ORIGINS[ORIGIN_CODE];
+
+      const CONTACT_EMAIL = "geri@legefilms.com";
+      const INSTAGRAM_URL = "https://www.instagram.com/legefilms/";
+
+      /* The primary CTA. Replace this one string with a real scheduling link
+         (Calendly / Cal.com / SavvyCal) and the button re-points itself. */
+      const SCHEDULING_URL =
+        "mailto:" +
+        CONTACT_EMAIL +
+        "?subject=" +
+        encodeURIComponent(ORIGIN.title.full + " — 30-minute walkthrough") +
+        "&body=" +
+        encodeURIComponent(
+          "Hi Geri,\n\nWe'd like to walk through the " +
+            ORIGIN.code +
+            "–" +
+            DESTINATION.code +
+            " proposal. Here are a few times that work on our side:\n\n— \n— \n— \n\nThanks,\n"
+        );
+
+      /* ====================================================================
+         2. TEMPLATE RESOLUTION
+         Every [data-r] element already contains the DFW text as its static
+         fallback, so the page reads correctly with JS disabled. This walk
+         overwrites it from the config — a no-op for DFW, the whole swap
+         for SFO.
+         ================================================================= */
+
+      const TOKENS = {
+        "origin.code": ORIGIN.code,
+        "origin.city": ORIGIN.city,
+        "origin.coords": ORIGIN.coords,
+        "origin.aircraft": ORIGIN.aircraft,
+        "origin.aircraftShort": ORIGIN.aircraftShort,
+        "dest.code": DESTINATION.code,
+        "dest.city": DESTINATION.city,
+        "dest.coords": DESTINATION.coords,
+        "route.legLabel": ORIGIN.code + " → " + DESTINATION.code,
+        "route.legLabelShort": ORIGIN.code + "–" + DESTINATION.code,
+        "route.duration": ORIGIN.duration,
+        "title.line1": ORIGIN.title.line1,
+        "title.line2": ORIGIN.title.line2,
+        "title.full": ORIGIN.title.full,
+        "copy.why1": ORIGIN.copy.why1,
+        "copy.why2": ORIGIN.copy.why2,
+        "copy.why3": ORIGIN.copy.why3,
+        "copy.why4": ORIGIN.copy.why4,
+        "copy.logline": ORIGIN.copy.logline,
+        "copy.provided": ORIGIN.copy.provided,
+        "copy.tlFilm": ORIGIN.copy.tlFilm,
+      };
+
+      // Keys whose values are authored with inline <b> emphasis.
+      const HTML_KEYS = new Set([
+        "copy.why1",
+        "copy.why2",
+        "copy.why3",
+        "copy.why4",
+        "copy.provided",
+      ]);
+
+      document.querySelectorAll("[data-r]").forEach(function (el) {
+        const key = el.getAttribute("data-r");
+        if (!(key in TOKENS)) return;
+        if (HTML_KEYS.has(key)) el.innerHTML = TOKENS[key];
+        else el.textContent = TOKENS[key];
+      });
+
+      document.title =
+        ORIGIN.title.full + " — A Single-Journey Campaign Proposal for Qantas";
+
+      /* ====================================================================
+         3. MAP PROJECTION  (inherited from Beyond The Horizon)
+
+         Equirectangular onto a 1000×520 space, centred on 100°W — the
+         Americas-centred framing a US-market deck needs. Deliberately linear
+         (no modulo wrap), so Asia-Pacific longitudes are authored as
+         (lon − 360) via A(). Sydney's +151.18 resolves to −208.82, which
+         places it WEST of Dallas on the canvas — so the arc sweeps across
+         the Pacific in its true direction rather than back over Europe.
+
+         The viewBox then crops to the Pacific sector: x 43…663 spans roughly
+         95°E to 41°W. Europe and Africa fall outside it by design.
+         ================================================================= */
+
+      const MAP_W = 1000;
+      const MAP_H = 520;
+      const CENTER_LON = -100;
+
+      function project(lon, lat) {
+        let l = lon;
+        while (l - CENTER_LON > 180) l -= 360;
+        while (l - CENTER_LON < -180) l += 360;
+        return [((l - CENTER_LON + 180) / 360) * MAP_W, ((90 - lat) / 180) * MAP_H];
+      }
+
+      function landPath(ring) {
+        return (
+          ring
+            .map(function (p) {
+              return project(p[0], p[1]);
+            })
+            .map(function (p, i) {
+              return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1);
+            })
+            .join(" ") + " Z"
+        );
+      }
+
+      function arcPath(p1, p2, lift) {
+        const len = Math.hypot(p2[0] - p1[0], p2[1] - p1[1]);
+        const mx = (p1[0] + p2[0]) / 2;
+        const my = (p1[1] + p2[1]) / 2 - len * lift;
+        return (
+          "M " +
+          p1[0].toFixed(1) +
+          " " +
+          p1[1].toFixed(1) +
+          " Q " +
+          mx.toFixed(1) +
+          " " +
+          my.toFixed(1) +
+          " " +
+          p2[0].toFixed(1) +
+          " " +
+          p2[1].toFixed(1)
+        );
+      }
+
+      const A = function (d) {
+        return d - 360;
+      };
+      const shift = function (ring) {
+        return ring.map(function (p) {
+          return [A(p[0]), p[1]];
+        });
+      };
+
+      const LAND = {
+        northAmerica: [
+          [-168, 66], [-156, 71], [-130, 70], [-110, 68], [-95, 70], [-81, 73],
+          [-65, 66], [-60, 58], [-64, 45], [-70, 42], [-74, 40.5], [-76, 35],
+          [-81, 25], [-84, 30], [-90, 29], [-97, 26], [-97, 20], [-91, 19],
+          [-87, 21], [-83, 10], [-79, 9], [-83, 8], [-87, 13], [-95, 16],
+          [-105, 20], [-110, 23], [-114, 28], [-117, 32.5], [-122, 37], [-124, 46],
+          [-128, 52], [-135, 58], [-150, 59], [-158, 56], [-165, 55],
+        ],
+        greenland: [
+          [-45, 60], [-42, 65], [-30, 68], [-22, 70], [-20, 75], [-25, 78],
+          [-35, 82], [-50, 82], [-62, 80], [-70, 76], [-73, 70], [-65, 65], [-53, 62],
+        ],
+        southAmerica: [
+          [-75, 11], [-70, 12], [-62, 10.5], [-55, 6], [-50, 0], [-44, -2],
+          [-38, -5], [-35, -8], [-38, -13], [-40, -20], [-43, -23], [-48, -25],
+          [-52, -32], [-58, -35], [-62, -39], [-65, -45], [-68, -52], [-68, -55],
+          [-74, -52], [-75, -46], [-73, -42], [-72, -37], [-71.6, -33], [-70.4, -23],
+          [-70.3, -18], [-77, -12], [-81, -5], [-81, -2], [-79, 2], [-77, 4],
+        ],
+        cuba: [[-85, 22], [-80, 23], [-74, 20.2], [-77, 19.9], [-84, 21.8]],
+        eurasiaEast: shift([
+          [80, 76], [100, 76], [115, 74], [130, 73], [145, 72], [160, 70], [172, 68],
+          [179, 65], [172, 62], [164, 60], [160, 54], [155, 52], [152, 59],
+          [142, 54], [140, 49], [135, 45], [132, 43], [128, 42], [126, 38],
+          [122, 39], [121, 32], [119, 25], [114, 22.3], [110, 20], [108, 16],
+          [109, 11], [106, 9], [104, 1.5], [100, 6], [98, 10], [95, 16], [93, 18],
+          [89, 21.5], [84, 19], [80, 13],
+        ]),
+        japan: shift([
+          [131, 31], [132, 34], [135, 34], [137, 35], [140, 36], [141, 39],
+          [141, 41], [145, 43], [144, 45], [140, 42], [138, 37], [136, 37],
+          [133, 35], [131, 34], [129, 33],
+        ]),
+        philippines: shift([[121, 18], [124, 13], [126, 10], [125, 6], [122, 7], [120, 13]]),
+        sumatra: shift([[95, 5.5], [100, 2], [104, -2], [106, -6], [103, -6], [100, -3], [97, 1]]),
+        java: shift([[105, -6], [112, -7], [114, -8.5], [110, -8], [106, -7]]),
+        borneo: shift([[109, 2], [117, 4], [119, 1], [117, -3], [111, -3], [109, 0]]),
+        newGuinea: shift([[131, -1], [141, -3], [147, -6], [150, -10], [143, -9], [137, -8], [132, -5]]),
+        australia: shift([
+          [130.8, -12.5], [136, -12], [137, -16], [140, -17], [142.5, -10.7],
+          [145.8, -17], [149, -21], [153, -27.5], [153, -31], [151.2, -33.9],
+          [150, -37], [145, -38.5], [141, -38], [138.6, -35], [137, -35],
+          [135, -34.5], [130, -32], [122, -34], [118, -35], [115.8, -32],
+          [114.5, -28], [113.5, -26], [114, -22], [118.5, -20.3], [122.2, -18],
+          [125, -14.5], [128, -15],
+        ]),
+        tasmania: shift([[145, -41], [148, -41], [148, -43.5], [145, -43.5]]),
+        nzNorth: shift([
+          [173, -34.4], [175, -36], [177, -37.5], [178.5, -37.6], [176, -40],
+          [174.8, -41.3], [174, -39.5], [173, -38], [172.7, -36],
+        ]),
+        nzSouth: shift([
+          [172.5, -40.5], [174, -41.5], [173, -43], [171, -44.5], [170.5, -45.9],
+          [168, -46.6], [166.5, -45.5], [168, -44], [171, -42.5],
+        ]),
+      };
+
+      /* ====================================================================
+         4. MAP RENDER
+         ================================================================= */
+
+      const NODES = [ORIGIN, DESTINATION];
+      const SVG_NS = "http://www.w3.org/2000/svg";
+      let activeCode = ORIGIN.code;
+
+      function svgEl(name, attrs) {
+        const el = document.createElementNS(SVG_NS, name);
+        for (const k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+      }
+
+      function buildMap() {
+        const svg = document.getElementById("map");
+        const p1 = project(ORIGIN.lon, ORIGIN.lat);
+        const p2 = project(DESTINATION.lon, DESTINATION.lat);
+        const d = arcPath(p1, p2, 0.18);
+
+        svg.innerHTML =
+          '<defs>' +
+          '<filter id="shs-glow" x="-60%" y="-60%" width="220%" height="220%">' +
+          '<feGaussianBlur stdDeviation="4" result="b"/>' +
+          '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+          "</filter>" +
+          '<linearGradient id="shs-route" x1="0" y1="0" x2="1" y2="0">' +
+          '<stop offset="0%" stop-color="var(--brand)" stop-opacity="0.45"/>' +
+          '<stop offset="50%" stop-color="var(--brand)" stop-opacity="1"/>' +
+          '<stop offset="100%" stop-color="var(--brand)" stop-opacity="0.45"/>' +
+          "</linearGradient>" +
+          '<radialGradient id="shs-halo" cx="50%" cy="50%" r="50%">' +
+          '<stop offset="0%" stop-color="var(--brand)" stop-opacity="0.09"/>' +
+          '<stop offset="100%" stop-color="var(--brand)" stop-opacity="0"/>' +
+          "</radialGradient>" +
+          "</defs>";
+
+        // Ambient wash over the Pacific
+        svg.appendChild(svgEl("ellipse", { cx: 350, cy: 230, rx: 280, ry: 160, fill: "url(#shs-halo)" }));
+
+        // Graticule
+        [-60, -30, 0, 30, 60].forEach(function (lat) {
+          const y = project(0, lat)[1];
+          const line = svgEl("line", {
+            x1: 0, y1: y, x2: MAP_W, y2: y,
+            stroke: "var(--heading)",
+            "stroke-opacity": lat === 0 ? 0.22 : 0.1,
+          });
+          if (lat === 0) line.setAttribute("stroke-dasharray", "2 8");
+          svg.appendChild(line);
+        });
+        for (let i = 0; i <= 8; i++) {
+          svg.appendChild(
+            svgEl("line", {
+              x1: i * 125, y1: 0, x2: i * 125, y2: MAP_H,
+              stroke: "var(--heading)", "stroke-opacity": 0.07,
+            })
+          );
+        }
+
+        // Continents
+        const land = svgEl("g", {});
+        Object.keys(LAND).forEach(function (k) {
+          land.appendChild(
+            svgEl("path", {
+              d: landPath(LAND[k]),
+              fill: "var(--land)",
+              "fill-opacity": 1,
+              stroke: "var(--brand)",
+              "stroke-opacity": 0.3,
+              "stroke-width": 0.7,
+              "stroke-linejoin": "round",
+            })
+          );
+        });
+        svg.appendChild(land);
+
+        // The single sector
+        const routeG = svgEl("g", {});
+        routeG.appendChild(
+          svgEl("path", { d: d, fill: "none", stroke: "var(--brand)", "stroke-opacity": 0.3, "stroke-width": 6 })
+        );
+        const drawn = svgEl("path", {
+          id: "shs-sector",
+          d: d,
+          fill: "none",
+          stroke: "url(#shs-route)",
+          "stroke-width": 1.6,
+          "stroke-linecap": "round",
+          filter: "url(#shs-glow)",
+        });
+        routeG.appendChild(drawn);
+
+        const dashes = svgEl("path", {
+          d: d,
+          fill: "none",
+          stroke: "var(--brand-dp)",
+          "stroke-width": 1.2,
+          "stroke-dasharray": "3 14",
+          "stroke-opacity": 0.85,
+        });
+        const anim = svgEl("animate", {
+          attributeName: "stroke-dashoffset",
+          from: "0", to: "-170", dur: "5s", repeatCount: "indefinite",
+        });
+        dashes.appendChild(anim);
+        routeG.appendChild(dashes);
+
+        // Travelling light
+        const spark = svgEl("circle", { r: 3.4, fill: "var(--brand)" });
+        const motion = svgEl("animateMotion", { dur: "8s", repeatCount: "indefinite", rotate: "auto" });
+        const mpath = svgEl("mpath", { href: "#shs-sector" });
+        // Safari still wants the xlink form.
+        mpath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "#shs-sector");
+        motion.appendChild(mpath);
+        spark.appendChild(motion);
+        routeG.appendChild(spark);
+        svg.appendChild(routeG);
+
+        // Draw-on animation for the sector line
+        const total = drawn.getTotalLength ? drawn.getTotalLength() : 600;
+        drawn.style.strokeDasharray = total;
+        drawn.style.strokeDashoffset = total;
+        drawn.style.transition = "stroke-dashoffset 1.8s var(--ease)";
+
+        // Nodes
+        NODES.forEach(function (n, i) {
+          const pt = project(n.lon, n.lat);
+          const x = pt[0];
+          const y = pt[1];
+          const g = svgEl("g", {
+            class: "node",
+            tabindex: "0",
+            role: "button",
+            "aria-label": n.city + " (" + n.code + ")",
+            "data-code": n.code,
+          });
+
+          g.appendChild(svgEl("circle", { cx: x, cy: y, r: 32, fill: "transparent" }));
+
+          const halo = svgEl("circle", {
+            class: "halo", cx: x, cy: y, r: 18,
+            fill: "var(--brand)", "fill-opacity": 0.08,
+            stroke: "var(--brand)", "stroke-opacity": 0.35,
+          });
+          g.appendChild(halo);
+
+          // Pulsing ping — origin pinned so it expands from the node itself
+          const ping = svgEl("circle", {
+            cx: x, cy: y, r: 12, fill: "none",
+            stroke: "var(--brand)", "stroke-opacity": 0.55,
+          });
+          ping.appendChild(
+            svgEl("animate", {
+              attributeName: "r", values: "12;29", dur: "2.6s",
+              begin: i * 0.45 + "s", repeatCount: "indefinite",
+            })
+          );
+          ping.appendChild(
+            svgEl("animate", {
+              attributeName: "stroke-opacity", values: "0.55;0", dur: "2.6s",
+              begin: i * 0.45 + "s", repeatCount: "indefinite",
+            })
+          );
+          g.appendChild(ping);
+
+          g.appendChild(
+            svgEl("rect", {
+              x: x - 4.5, y: y - 4.5, width: 9, height: 9,
+              fill: "var(--brand)",
+              transform: "rotate(45 " + x + " " + y + ")",
+            })
+          );
+
+          const code = svgEl("text", {
+            x: x, y: y + 42, "text-anchor": "middle", fill: "var(--heading)",
+            style:
+              "font-family:var(--font-display);font-size:19px;letter-spacing:0px;font-weight:500",
+          });
+          code.textContent = n.code;
+          g.appendChild(code);
+
+          const city = svgEl("text", {
+            x: x, y: y + 60, "text-anchor": "middle", fill: "var(--muted)",
+            style:
+              "font-family:var(--font-sans);font-size:10px;letter-spacing:1.1px;font-weight:500",
+          });
+          const prefix = n.code === ORIGIN.code ? "ORIGIN · " : "ARRIVAL · ";
+          city.textContent = prefix + (n.cityShort || n.city).toUpperCase();
+          g.appendChild(city);
+
+          g.addEventListener("mouseenter", function () { select(n.code); });
+          g.addEventListener("click", function () { select(n.code); });
+          g.addEventListener("focus", function () { select(n.code); });
+          g.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(n.code); }
+          });
+
+          svg.appendChild(g);
+        });
+
+        // Kick the line draw once the map scrolls into view
+        const io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                drawn.style.strokeDashoffset = "0";
+                io.disconnect();
+              }
+            });
+          },
+          { threshold: 0.2 }
+        );
+        io.observe(svg);
+      }
+
+      /* ====================================================================
+         5. NODE SELECTION + CARD
+         ================================================================= */
+
+      function nodeCardHTML(n) {
+        const isOrigin = n.code === ORIGIN.code;
+        return (
+          '<div class="hero-img media-wrap">' +
+          '<img src="' + n.img + '" alt="' + n.city + ", " + n.country + '" loading="lazy" data-media>' +
+          '<div class="scrim"></div>' +
+          '<div class="badges">' +
+          '<span class="tag accent">' + n.code + "</span>" +
+          '<span class="tag">' + n.label + "</span>" +
+          "</div>" +
+          '<div class="refcap">Treatment reference · direction, not final frames</div>' +
+          "</div>" +
+          '<div class="body">' +
+          "<div>" +
+          '<p class="kicker" style="margin:0">' +
+          (isOrigin ? "Departure" : "Arrival") +
+          "</p>" +
+          "<h3>" + n.city + '<span class="dim">, ' + n.country + '</span><span class="code">[' + n.code + "]</span></h3>" +
+          '<p class="coordline"><span>' + n.airport + '</span><span class="faint">' + n.coords + "</span></p>" +
+          "</div>" +
+          '<div class="status"></div>' +
+          '<p class="hook">' + n.hook + "</p>" +
+          '<div class="leg"><span class="ac">✦</span>' +
+          ORIGIN.code + " → " + DESTINATION.code + " · " + ORIGIN.aircraftShort + " · " + ORIGIN.duration +
+          "</div>" +
+          "</div>"
+        );
+      }
+
+      function select(code) {
+        if (code === activeCode) return;
+        activeCode = code;
+        const node = NODES.filter(function (n) { return n.code === code; })[0];
+
+        const card = document.getElementById("nodeCard");
+        card.style.opacity = "0";
+        card.style.transform = "translateY(10px)";
+        window.setTimeout(function () {
+          card.innerHTML = nodeCardHTML(node);
+          bindMedia(card);
+          card.style.opacity = "1";
+          card.style.transform = "none";
+        }, 160);
+
+        document.querySelectorAll(".nodebtn").forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b.dataset.code === code));
+        });
+        document.querySelectorAll("#map .node").forEach(function (g) {
+          const on = g.dataset.code === code;
+          const halo = g.querySelector(".halo");
+          if (halo) {
+            halo.setAttribute("r", on ? 24 : 18);
+            halo.setAttribute("stroke-opacity", on ? 0.55 : 0.2);
+          }
+          g.querySelectorAll("text").forEach(function (t, i) {
+            t.setAttribute("opacity", on ? 1 : i === 0 ? 0.78 : 0.6);
+          });
+        });
+      }
+
+      function buildNodeButtons() {
+        const wrap = document.getElementById("mapNodes");
+        NODES.forEach(function (n) {
+          const b = document.createElement("button");
+          b.className = "nodebtn";
+          b.dataset.code = n.code;
+          b.setAttribute("aria-pressed", String(n.code === activeCode));
+          b.textContent = "◆ " + n.code;
+          b.addEventListener("mouseenter", function () { select(n.code); });
+          b.addEventListener("click", function () { select(n.code); });
+          wrap.appendChild(b);
+        });
+      }
+
+      /* ====================================================================
+         6. CONTENT BLOCKS
+         ================================================================= */
+
+      const ACT_ICONS = [
+        // Door / boarding
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h3a2 2 0 0 1 2 2v14"/><path d="M2 20h3"/><path d="M13 20h9"/><path d="M10 12v.01"/><path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z"/></svg>',
+        // Moon / the long dark
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>',
+        // Sunrise / arrival
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>',
+      ];
+
+      function buildActs() {
+        const wrap = document.getElementById("acts");
+        ORIGIN.acts.forEach(function (act, i) {
+          const el = document.createElement("div");
+          el.className = "reveal card hoverable act";
+          el.style.setProperty("--d", i * 0.1 + "s");
+          el.innerHTML =
+            '<div class="ghost" aria-hidden="true">0' + (i + 1) + "</div>" +
+            '<div class="icon">' + ACT_ICONS[i] + "</div>" +
+            '<p class="kicker" style="margin:26px 0 0">' + act.numeral + "</p>" +
+            "<h4>" + act.title + "</h4>" +
+            '<div class="rule" style="margin:22px 0"></div>' +
+            "<ul>" +
+            act.beats.map(function (b) { return "<li>" + b + "</li>"; }).join("") +
+            "</ul>";
+          wrap.appendChild(el);
+        });
+      }
+
+      /* Self-hosted MP4s. Instagram embeds are deliberately not used here:
+         they are blocked on most corporate networks and this deck will be
+         forwarded internally. Drop the files into ./assets/ — see README. */
+      const WORK = [
+        {
+          label: "Reach",
+          src: "./assets/work-reach.mp4",
+          poster: "./assets/work-reach.jpg",
+          stats: [
+            { plat: "Instagram", val: "13M views · 2.2M likes" },
+            { plat: "TikTok", val: "8.3M views · 2.3M likes" },
+          ],
+          proof: "Cross-platform performance at scale — the same cut carrying on two different algorithms.",
+          href: "https://www.instagram.com/p/DcEh0xKyDd7/",
+        },
+        {
+          label: "Craft",
+          src: "./assets/work-craft.mp4",
+          poster: "./assets/work-craft.jpg",
+          stats: [{ plat: "Instagram", val: "2.3M views" }],
+          proof: "Cinematic reference for the hero film — the tone, pacing and grade this campaign would be shot in.",
+          href: "https://www.instagram.com/reels/DK3sRTCscJc/",
+        },
+        {
+          label: "Brand",
+          src: "./assets/work-brand.mp4",
+          poster: "./assets/work-brand.jpg",
+          stats: [{ plat: "Instagram", val: "1.5M views" }],
+          proof: "Collaboration with The Edge, delivered inside a brand approval process — on brief, on schedule, signed off.",
+          href: "https://www.instagram.com/reel/DUPNomqkVsW/",
+        },
+      ];
+
+      function buildWork() {
+        const wrap = document.getElementById("workGrid");
+        WORK.forEach(function (w, i) {
+          const el = document.createElement("div");
+          el.className = "reveal card hoverable work-card";
+          el.style.setProperty("--d", i * 0.1 + "s");
+          el.innerHTML =
+            '<div class="work-media">' +
+            '<span class="tag accent label">' + w.label + "</span>" +
+            '<video muted loop playsinline preload="none" poster="' + w.poster + '" data-video>' +
+            '<source src="' + w.src + '" type="video/mp4">' +
+            "</video>" +
+            // aria-hidden + tabindex -1: the visible text link below already
+            // exposes this destination, so this is a mouse convenience rather
+            // than a second tab stop reading out the same thing.
+            (w.href
+              ? '<a class="work-overlay" href="' + w.href +
+                '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' +
+                '<span class="cue">Watch on Instagram <span>↗</span></span></a>'
+              : "") +
+            '<button class="sound-toggle" type="button">Sound off</button>' +
+            "</div>" +
+            '<div class="work-body">' +
+            '<div class="work-stats">' +
+            w.stats.map(function (s) {
+              return '<div class="work-stat"><span class="plat">' + s.plat + '</span><span class="val">' + s.val + "</span></div>";
+            }).join("") +
+            "</div>" +
+            '<div class="rule"></div>' +
+            '<p class="work-proof">' + w.proof + "</p>" +
+            // The video is self-hosted so it always plays, even behind a
+            // corporate firewall that blocks instagram.com. This link is the
+            // receipt: anyone who wants to check the numbers can open the
+            // original post. Belt and braces, not one or the other.
+            (w.href
+              ? '<a class="work-link" href="' + w.href +
+                '" target="_blank" rel="noopener noreferrer">View on Instagram <span aria-hidden="true">↗</span></a>'
+              : "") +
+            "</div>";
+          wrap.appendChild(el);
+        });
+        wireVideos();
+      }
+
+      const DELIVERABLES = [
+        {
+          tag: "Hero",
+          count: "1×",
+          title: "Hero Reel",
+          spec: "60s+ · Scripted · Collab-posted",
+          body:
+            "One narrative Reel carrying the full three-act arc. Script and storyboard approved before travel — a single approval round, not a revision cycle.",
+          points: [
+            "Published to @legefilms with Qantas collab-post",
+            "Original sound design and licensed score",
+            "Story frames supporting the drop, link sticker where applicable",
+          ],
+          icon:
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 11 16-4"/><path d="M4.1 7.3 20 3l1 3.7L5.1 11z"/><path d="M4 11h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>',
+        },
+        {
+          tag: "Ambient",
+          count: "3×",
+          title: "Ambient Reels",
+          spec: "Short-form · Organic-native · Unscripted",
+          body:
+            "Three fast posts engineered not to read as campaign content. Cabin texture and arrival micro-moments, cut to the rhythm of the feed.",
+          points: [
+            "Native to Reels, Shorts and TikTok",
+            "Sound-on and sound-off cuts supplied",
+            "Rolling release across the weeks after the hero drop",
+          ],
+          icon:
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M17 3v18"/><path d="M3 12h18"/></svg>',
+        },
+        {
+          tag: "Rights",
+          count: "3 mo",
+          title: "Usage & Licensing",
+          spec: "3 months · Organic + paid · Renewable",
+          body:
+            "Three-month commercial license from first publish, covering Qantas's organic and paid social. Whitelisting and paid amplification included for the full term.",
+          points: [
+            "Term renewal: +3 months at 25% of campaign fee",
+            "Owned web, OOH or in-flight entertainment quoted per placement",
+            "Raw selects available on request",
+          ],
+          icon:
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
+        },
+      ];
+
+      function buildDeliverables() {
+        const wrap = document.getElementById("delivGrid");
+        DELIVERABLES.forEach(function (d, i) {
+          const el = document.createElement("div");
+          el.className = "reveal card hoverable deliv";
+          el.style.setProperty("--d", i * 0.12 + "s");
+          el.innerHTML =
+            '<div class="wash" aria-hidden="true"></div>' +
+            '<div class="top"><div class="icon">' + d.icon + '</div><span class="tag">' + d.tag + "</span></div>" +
+            '<div class="headline"><span class="count">' + d.count + "</span><h3>" + d.title + "</h3></div>" +
+            '<p class="meta spec">' + d.spec + "</p>" +
+            '<p class="body">' + d.body + "</p>" +
+            '<div class="rule" style="margin:22px 0"></div>' +
+            "<ul>" + d.points.map(function (p) { return "<li>" + p + "</li>"; }).join("") + "</ul>";
+          wrap.appendChild(el);
+        });
+      }
+
+      const METRICS = [
+        { val: "110K+", lab: "Followers", sub: "Combined across platforms" },
+        { val: "250M+", lab: "Total views", sub: "Lifetime across platforms" },
+        { val: "17.4%", lab: "Median like-to-view", sub: "Last 30 posts, as of 1 Sep 2026" },
+        { val: "US", lab: "Primary market", sub: "Majority US-based audience" },
+      ];
+
+      const BARS = [
+        { lab: "Age 24–35", pct: 44 },
+        { lab: "Male", pct: 52 },
+        { lab: "Female", pct: 48 },
+      ];
+
+      function buildCreator() {
+        const m = document.getElementById("metrics");
+        METRICS.forEach(function (x) {
+          const el = document.createElement("div");
+          el.className = "metric";
+          el.innerHTML =
+            '<p class="val">' + x.val + '</p><p class="lab">' + x.lab + '</p><p class="sub">' + x.sub + "</p>";
+          m.appendChild(el);
+        });
+
+        const b = document.getElementById("bars");
+        BARS.forEach(function (x, i) {
+          const el = document.createElement("div");
+          el.className = "bar";
+          el.innerHTML =
+            '<div class="top"><span class="lab">' + x.lab + '</span><span class="pct">' + x.pct + "%</span></div>" +
+            '<div class="track"><div class="fill" style="--d:' + i * 0.15 + 's"></div></div>';
+          b.appendChild(el);
+        });
+      }
+
+      function buildTicker() {
+        const items = [
+          "QF · " + ORIGIN.code + " – " + DESTINATION.code + " · TRANSPACIFIC · " + ORIGIN.aircraftShort + " · DAILY",
+          ORIGIN.aircraft.toUpperCase() + " · FOUR CABINS · " + ORIGIN.duration.replace("≈", "").toUpperCase(),
+          "01 HERO REEL · 03 AMBIENT REELS · 3-MONTH LICENSE",
+          "SOUTHBOUND · NORTH AMERICAN MARKET · SUMMER BOOKING WINDOW",
+        ];
+        const row = document.getElementById("tickerRow");
+        const doubled = items.concat(items);
+        row.innerHTML = doubled
+          .map(function (t) { return "<span><i></i>" + t + "</span>"; })
+          .join("");
+      }
+
+      /* ====================================================================
+         7. MEDIA FALLBACKS
+         A missing file renders a branded placeholder naming it, rather than
+         a broken-image glyph — same behaviour as the sibling deck's <Media>.
+         ================================================================= */
+
+      function fallbackHTML(src) {
+        const name = String(src).replace("./assets/", "");
+        return (
+          '<div class="media-fallback">' +
+          '<span class="glyph">◵</span>' +
+          "<p>" + name + "</p>" +
+          '<p class="sub">Drop into ./assets/</p>' +
+          "</div>"
+        );
+      }
+
+      function bindMedia(root) {
+        (root || document).querySelectorAll("img[data-media]").forEach(function (img) {
+          if (img.dataset.bound) return;
+          img.dataset.bound = "1";
+          const fail = function () {
+            const wrap = img.closest(".media-wrap") || img.parentElement;
+            const cap = wrap.querySelector(".refcap");
+            img.remove();
+            const ph = document.createElement("div");
+            ph.innerHTML = fallbackHTML(img.getAttribute("src"));
+            wrap.insertBefore(ph.firstChild, cap || null);
+          };
+          img.addEventListener("error", fail);
+          if (img.complete && img.naturalWidth === 0) fail();
+        });
+      }
+
+      function wireVideos() {
+        const vids = Array.prototype.slice.call(document.querySelectorAll("video[data-video]"));
+
+        vids.forEach(function (v) {
+          const shell = v.parentElement;
+
+          v.addEventListener("error", function () {
+            const src = v.querySelector("source");
+            shell.querySelectorAll(".sound-toggle").forEach(function (b) { b.remove(); });
+            const ph = document.createElement("div");
+            ph.innerHTML = fallbackHTML(src ? src.getAttribute("src") : "video");
+            ph.firstChild.style.position = "absolute";
+            ph.firstChild.style.inset = "0";
+            shell.appendChild(ph.firstChild);
+            v.remove();
+          }, true);
+
+          const btn = shell.querySelector(".sound-toggle");
+          if (btn) {
+            btn.addEventListener("click", function () {
+              const turningOn = v.muted;
+              if (turningOn) {
+                // Only one soundtrack at a time.
+                vids.forEach(function (o) {
+                  if (o !== v) {
+                    o.muted = true;
+                    const ob = o.parentElement.querySelector(".sound-toggle");
+                    if (ob) ob.textContent = "Sound off";
+                  }
+                });
+              }
+              v.muted = !turningOn;
+              btn.textContent = v.muted ? "Sound off" : "Sound on";
+              if (!v.muted) v.play().catch(function () {});
+            });
+          }
+        });
+
+        // Play only what is on screen — three autoplaying files at once is
+        // a needless download on a deck that gets opened on phones.
+        const io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              const v = e.target;
+              if (e.isIntersecting) {
+                if (v.preload === "none") v.preload = "auto";
+                v.play().catch(function () {});
+              } else {
+                v.pause();
+              }
+            });
+          },
+          { threshold: 0.35 }
+        );
+        vids.forEach(function (v) { io.observe(v); });
+      }
+
+      /* ====================================================================
+         8. SCROLL BEHAVIOUR
+         ================================================================= */
+
+      function wireReveals() {
+        const io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -80px 0px", threshold: 0.05 }
+        );
+        document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+
+        // Audience bars fill when their card arrives
+        const bio = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              const idx = Array.prototype.indexOf.call(
+                document.querySelectorAll("#bars .bar"),
+                e.target
+              );
+              e.target.querySelector(".fill").style.width = BARS[idx].pct + "%";
+              bio.unobserve(e.target);
+            });
+          },
+          { threshold: 0.4 }
+        );
+        document.querySelectorAll("#bars .bar").forEach(function (el) { bio.observe(el); });
+      }
+
+      function wireScroll() {
+        const bar = document.getElementById("progress");
+        const heroInner = document.getElementById("heroInner");
+        let ticking = false;
+
+        function frame() {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          const y = window.scrollY;
+          bar.style.transform = "scaleX(" + (max > 0 ? Math.min(y / max, 1) : 0) + ")";
+
+          // Hero parallax — mirrors the sibling's useTransform pair
+          if (heroInner && y < window.innerHeight) {
+            const p = y / window.innerHeight;
+            heroInner.style.transform = "translateY(" + p * 120 + "px)";
+            heroInner.style.opacity = String(Math.max(0, 1 - p / 0.7));
+          }
+          ticking = false;
+        }
+
+        window.addEventListener(
+          "scroll",
+          function () {
+            if (!ticking) {
+              ticking = true;
+              window.requestAnimationFrame(frame);
+            }
+          },
+          { passive: true }
+        );
+        frame();
+      }
+
+      function wireNav() {
+        document.querySelectorAll("[data-to]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            const id = b.dataset.to;
+            if (id === "top") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              return;
+            }
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+      }
+
+      /* ====================================================================
+         9. BOOT
+         ================================================================= */
+
+      document.getElementById("scheduleBtn").href = SCHEDULING_URL;
+      document.getElementById("emailLink").href = "mailto:" + CONTACT_EMAIL;
+      document.getElementById("emailLink").textContent = CONTACT_EMAIL;
+
+      buildTicker();
+      buildMap();
+      buildNodeButtons();
+
+      const card = document.getElementById("nodeCard");
+      card.style.transition = "opacity .5s var(--ease), transform .5s var(--ease)";
+      card.innerHTML = nodeCardHTML(ORIGIN);
+
+      buildActs();
+      buildWork();
+      buildDeliverables();
+      buildCreator();
+      bindMedia(document);
+      wireReveals();
+      wireScroll();
+      wireNav();
+    </script>
+  </body>
+</html>
